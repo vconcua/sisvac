@@ -1,0 +1,23 @@
+sequenceDiagram
+actor Pa as Padre/Madre
+participant FE as Carnet.jsx
+participant API as API Express
+participant DB as PostgreSQL
+participant S3 as AWS S3
+Note over API,S3: Al registrar el niño: se genera qr_codigo (UUID) + PIN de 6 dígitos y se guarda el PNG del QR en S3 (qr/)
+Pa->>FE: Escanea el QR (/carnet/:codigo)
+FE->>API: GET /api/carnet/:codigo/acceso
+API->>DB: ¿niño con padres vinculados?
+API-->>FE: { requiere_dpi }
+Pa->>FE: Ingresa PIN y DPI
+FE->>API: POST /api/carnet/:codigo {pin, dpi}
+API->>DB: ¿bloqueado hasta?
+alt bloqueado
+API-->>FE: 429 intente más tarde
+else PIN y DPI correctos
+API->>DB: reinicia intentos
+API-->>FE: 200 carnet (crecimiento + vacunas)
+else incorrectos
+API->>DB: intentos + 1 (5 intentos = 15 min)
+API-->>FE: 401 PIN o DPI incorrectos
+end

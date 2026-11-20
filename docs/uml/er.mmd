@@ -1,0 +1,14 @@
+erDiagram
+CENTROS_SALUD ||--o{ COMUNIDADES : atiende
+COMUNIDADES ||--o{ PADRES : tiene
+COMUNIDADES ||--o{ NINIOS : tiene
+PADRES }o--o{ NINIOS : ninio_padre
+NINIOS ||--o{ REGISTROS_CRECIMIENTO : mide
+NINIOS ||--o{ VACUNACIONES : recibe
+VACUNAS ||--o{ VACUNACIONES : catalogo
+NINIOS ||--o{ ALERTAS : genera
+ALERTAS ||--o{ NOTIFICACIONES : origina
+PADRES ||--o{ NOTIFICACIONES : recibe
+COMUNIDADES ||--o{ CAMPANIAS : segmenta
+USUARIOS ||--o{ REGISTROS_CRECIMIENTO : registra
+USUARIOS ||--o{ CAMPANIAS : crea

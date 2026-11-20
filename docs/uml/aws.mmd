@@ -1,0 +1,12 @@
+flowchart LR
+U[Usuario web] --> CF[CloudFront + S3 frontend]
+CF --> APIG[API Gateway]
+APIG --> LA[Lambda API Express]
+EB[EventBridge] --> LV[Lambda avisos]
+LA --> RDS[(RDS PostgreSQL)]
+LV --> RDS
+LA --> S3[(S3 privado: qr/ y documentos/reportes)]
+LA --> SNS[SNS alertas y SMS]
+LV --> SNS
+LA --> EXT[SMTP / Telegram / WhatsApp]
+LV --> EXT

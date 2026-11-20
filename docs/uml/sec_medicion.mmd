@@ -1,0 +1,26 @@
+sequenceDiagram
+actor PS as Personal de salud / Enfermería
+participant FE as Frontend React
+participant API as API Express
+participant P as Percentiles OMS
+participant DB as PostgreSQL
+participant N as Notificador
+participant SNS as AWS SNS
+actor Pa as Padre/Madre
+PS->>FE: Registra peso y talla
+FE->>API: POST /api/crecimiento (JWT)
+API->>API: autenticar + autorizar(A, PS, EN)
+API->>P: percentilPeso/Talla(sexo, edad en meses)
+P-->>API: percentiles (método LMS)
+API->>DB: INSERT registros_crecimiento
+alt percentil < 5 o > 95
+API->>DB: INSERT alertas (preventiva / crítica si < 3)
+API->>N: enviarPorCanal(canal preferido del padre)
+N-->>Pa: Email / Telegram / WhatsApp / SMS
+API->>DB: INSERT notificaciones
+opt alerta crítica
+API->>SNS: publicar alerta
+end
+end
+API-->>FE: 201 registro + percentiles
+FE-->>PS: Gráfica OMS actualizada

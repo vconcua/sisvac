@@ -1,0 +1,14 @@
+flowchart LR
+A((Administrador)) --- U1[Gestionar usuarios y catálogos]
+A --- U2[Reportes y exportación PDF/Excel]
+PS((Personal de salud)) --- U3[CRUD comunidades, padres y niños]
+PS --- U4[Registrar crecimiento y ver curvas OMS]
+PS --- U5[Aplicar vacunas]
+PS --- U6[Campañas segmentadas]
+EN((Enfermería)) --- U4
+EN --- U5
+EC((Encargado/Consulta)) --- U2
+EC --- U7[Ver alertas y niños]
+PA((Padre/Madre)) --- U8[Ver carnet con QR + PIN + DPI]
+U4 -.incluye.-> U9[Calcular percentil y generar alerta]
+U9 -.incluye.-> U10[Notificar por canal preferido]

@@ -1,0 +1,33 @@
+classDiagram
+direction TB
+class Usuario { +UUID id; +string nombre_completo; +string correo; +string password_hash; +Rol rol; +bool activo }
+class CentroSalud { +int id; +string nombre; +string tipo }
+class Comunidad { +UUID id; +string nombre; +int numero_estimado_familias }
+class Padre { +UUID id; +string nombre_completo; +string dpi (cifrado); +string dpi_hash; +string telefono; +string correo; +string telegram_chat_id; +Canal canal_preferido; +int login_intentos_fallidos }
+class Ninio { +UUID id; +string nombre_completo; +date fecha_nacimiento; +Sexo sexo; +UUID qr_codigo; +string qr_pin; +int qr_intentos_fallidos; +bool activo }
+class RegistroCrecimiento { +date fecha_medicion; +decimal peso_kg; +decimal talla_cm; +decimal edad_meses_al_medir; +decimal percentil_peso; +decimal percentil_talla }
+class Vacuna { +string nombre; +int edad_recomendada_meses; +int dosis_numero }
+class Vacunacion { +date fecha_aplicada; +date fecha_proxima_dosis; +Estado estado }
+class Alerta { +Tipo tipo (preventiva|critica); +string motivo; +string mensaje; +Estado estado }
+class Notificacion { +Canal canal; +string asunto; +string contenido; +Estado estado; +datetime enviado_en }
+class Campania { +string titulo; +string mensaje; +int edad_min_meses; +int edad_max_meses; +Estado filtro_estado }
+class Percentiles { <<servicio OMS LMS>> +percentilPeso(); +percentilTalla(); +curvaReferencia() }
+class Notificador { <<servicio>> +enviarPorCanal(); +resolverDestino() }
+class CarnetService { <<servicio>> +generarQR(); +consultarCarnet(); +enviarCarnet() }
+CentroSalud "1" --> "*" Comunidad
+Comunidad "1" --> "*" Padre
+Comunidad "1" --> "*" Ninio
+Padre "*" -- "*" Ninio : ninio_padre (parentesco)
+Ninio "1" --> "*" RegistroCrecimiento
+Ninio "1" --> "*" Vacunacion
+Vacuna "1" --> "*" Vacunacion
+Ninio "1" --> "*" Alerta
+Alerta "1" --> "*" Notificacion
+Padre "1" --> "*" Notificacion
+Campania "*" --> "0..1" Comunidad
+Usuario "1" --> "*" RegistroCrecimiento : registra
+Usuario "1" --> "*" Vacunacion : aplica
+Usuario "1" --> "*" Campania : crea
+RegistroCrecimiento ..> Percentiles : usa
+Alerta ..> Notificador : usa
+CarnetService ..> Ninio

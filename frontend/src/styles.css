@@ -1,0 +1,127 @@
+:root {
+  --azul-salud: #0b6e4f;
+  --azul-oscuro: #08543c;
+  --gris-fondo: #f4f6f5;
+  --alerta-critica: #c0392b;
+  --alerta-preventiva: #e67e22;
+  --borde: #e0e0e0;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--gris-fondo);
+  color: #222;
+}
+
+.layout { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: 220px;
+  background: var(--azul-oscuro);
+  color: white;
+  padding: 1.5rem 1rem;
+}
+.sidebar h2 { font-size: 1.1rem; margin-bottom: 2rem; }
+.sidebar a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 0.6rem 0.5rem;
+  border-radius: 6px;
+  margin-bottom: 0.3rem;
+}
+.sidebar a:hover, .sidebar a.activo { background: var(--azul-salud); }
+
+.contenido { flex: 1; padding: 2rem; }
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  margin-bottom: 1rem;
+}
+
+.grid-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+.stat-numero { font-size: 2rem; font-weight: bold; color: var(--azul-salud); }
+.stat-label { color: #666; font-size: 0.9rem; }
+
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 0.6rem; border-bottom: 1px solid var(--borde); }
+th { color: #555; font-size: 0.85rem; text-transform: uppercase; }
+
+.badge { padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.75rem; color: white; }
+.badge-critica { background: var(--alerta-critica); }
+.badge-preventiva { background: var(--alerta-preventiva); }
+.badge-ok { background: var(--azul-salud); }
+
+button, .btn {
+  background: var(--azul-salud);
+  color: white;
+  border: none;
+  padding: 0.55rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover { background: var(--azul-oscuro); }
+
+input, select {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--borde);
+  width: 100%;
+  margin-bottom: 0.8rem;
+}
+
+.login-box {
+  max-width: 380px;
+  margin: 10vh auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Calendario de vacunación */
+.cal-grid { display: grid; grid-template-columns: repeat(12, minmax(150px, 1fr)); gap: 6px; min-width: 1850px; }
+.cal-col { display: flex; flex-direction: column; }
+.cal-head { background: #fde9c9; border: 2px solid #f5a623; border-radius: 8px; padding: 0.5rem; text-align: center; margin-bottom: 6px; min-height: 58px; }
+.cal-sub { font-size: 0.75rem; color: #555; }
+.cal-body { background: #e3f1f8; border-radius: 8px; padding: 0.5rem; flex: 1; font-size: 0.85rem; }
+.cal-vac { margin-bottom: 0.7rem; }
+.cal-vac b { color: #08543c; }
+.cal-banda { margin-top: 6px; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; min-width: 1850px; }
+.cal-lactancia { background: #fbd38d; }
+.cal-influenza { background: #f6ad55; }
+.cal-dosis { background: white; border-radius: 6px; padding: 0.5rem; margin-bottom: 0.5rem; border-left: 4px solid var(--alerta-preventiva); font-size: 0.85rem; }
+.cal-dosis-aplicada { border-left-color: var(--azul-salud); }
+.cal-dosis-atrasada { border-left-color: var(--alerta-critica); }
+.cal-dosis b { color: #08543c; }
+.cal-fecha { color: #555; font-size: 0.8rem; margin: 0.2rem 0; }
+
+/* Portada del panel y del inicio de sesión */
+.hero {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  background-image: url('/portada.jpg'), linear-gradient(120deg, #08543c 0%, #0b6e4f 55%, #2a9d78 100%);
+  background-size: cover; background-position: center;
+  color: white; border-radius: 14px; padding: 1.6rem 2rem; margin-bottom: 1.5rem;
+  box-shadow: 0 2px 10px rgba(8, 84, 60, 0.25);
+}
+.hero h1 { margin: 0 0 0.4rem; font-size: 1.7rem; }
+.hero p { margin: 0; max-width: 460px; opacity: 0.95; }
+.hero-texto { flex: 1 1 280px; }
+
+.login-pagina { min-height: 100vh; display: flex; }
+.login-lado {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; color: white;
+  background-image: url('/portada.jpg'), linear-gradient(150deg, #08543c 0%, #0b6e4f 60%, #2a9d78 100%);
+  background-size: cover; background-position: center;
+}
+.login-lado h1 { font-size: 2rem; margin: 1rem 0 0.4rem; }
+.login-lado p { max-width: 380px; opacity: 0.95; }
+.login-form { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+.login-form .login-box { margin: 0; width: 100%; }
+@media (max-width: 800px) { .login-lado { display: none; } }

@@ -1,0 +1,15 @@
+sequenceDiagram
+participant EB as AWS EventBridge (cron diario)
+participant L as Lambda avisos
+participant DB as PostgreSQL (RDS)
+participant N as Notificador
+participant SNS as AWS SNS
+actor Pa as Padre/Madre
+EB->>L: dispara ejecución
+L->>DB: niños sin medición (0-2 años: 1 mes, 2-5 años: 3 meses)
+L->>DB: vacunas pendientes / atrasadas
+L->>DB: crea alertas (evita duplicados)
+L->>N: enviar aviso por canal preferido
+N-->>Pa: Email / Telegram / WhatsApp / SMS
+L->>SNS: alertas críticas
+L->>DB: registra notificaciones
